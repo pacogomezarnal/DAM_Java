@@ -13,6 +13,8 @@ public class ProbandoBoton extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField caja;
+	private JButton boton2;
+	private JTextField caja2;
 
 	/*
 	 * Punto de entrada a nuesttra app
@@ -49,7 +51,6 @@ public class ProbandoBoton extends JFrame {
 		boton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//Accion  a desarrollar
-				System.out.println("Mensaje cuando aprieto");
 				caja.setText("Mensaje cuando aprieto");
 			}
 		});
@@ -62,6 +63,26 @@ public class ProbandoBoton extends JFrame {
 		caja.setBounds(10, 59, 414, 20);		
 		contentPane.add(caja);
 		caja.setColumns(10);
+		
+		//Segundo boton
+		boton2 = new JButton("COMEME!!");
+		//LISTENER + EVENTO
+		//------------
+		boton2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				caja2.setText(caja.getText());
+			}
+		});
+		//------------
+		boton2.setBounds(10, 107, 113, 23);
+		contentPane.add(boton2);
+		
+		
+		//Segunda caja
+		caja2 = new JTextField();
+		caja2.setColumns(10);
+		caja2.setBounds(10, 158, 414, 20);
+		contentPane.add(caja2);
 		
 	}
 }
