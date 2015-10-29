@@ -51,7 +51,7 @@ public class ProbandoBoton extends JFrame {
 		boton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//Accion  a desarrollar
-				caja.setText("Mensaje cuando aprieto");
+				//caja.setText("Mensaje cuando aprieto");
 			}
 		});
 		//------------
