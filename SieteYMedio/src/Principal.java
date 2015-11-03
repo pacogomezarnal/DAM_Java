@@ -42,10 +42,12 @@ public class Principal extends JFrame {
 		 * */
 		//tipo nombreVariable= new tipo();
 		Carta sieteBastos=new Carta();
-		sieteBastos.numero=7;
-		sieteBastos.palo="BASTOS";
-		System.out.println("Tengo una carta que es el "+sieteBastos.numero+" su palo es "+sieteBastos.palo);
+		sieteBastos.setNumero(6);
+		sieteBastos.setPalo("BASTOS");
+		System.out.println("Tengo una carta que es el "+sieteBastos.getNumero()+" su palo es "+sieteBastos.getPalo());
 		
+		/* ESTO ESTA COMENTADO
+		 * *******************************
 		Carta unoOros=new Carta();
 		unoOros.numero=1;
 		unoOros.palo="OROS";
@@ -55,6 +57,8 @@ public class Principal extends JFrame {
 		c1.numero=12;
 		c1.palo="COPAS";
 		System.out.println("Tengo una carta que es el "+c1.numero+" su palo es "+c1.palo);
+		***********************************
+		*/
 		
 		
 	}
