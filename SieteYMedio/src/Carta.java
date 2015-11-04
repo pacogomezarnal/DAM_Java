@@ -9,6 +9,12 @@ public class Carta {
 	//PROPIEDADES
 	private int numero;
 	private String palo;
+	
+	//CONSTANTES
+	public static final String BASTOS="BASTOS";
+	public static final String COPAS="COPAS";
+	public static final String ESPADAS="ESPADAS";
+	public static final String OROS="OROS";
 
 	//Constructor
 	//Punto de entrada que se ejecuta al crear un objeto de tipo Carta
@@ -18,8 +24,15 @@ public class Carta {
 	
 	//FUNCIONES O METODOS
 	//public/private OUT nombreMetodo(IN)
-	public void setNumero(int numeroEntrada){
-		numero=numeroEntrada;
+	public void setNumero(int numero){
+		//SI PASA ALGO HAZ ...
+		if(numero<1){
+			this.numero=1;
+		}else if(numero>12){
+			this.numero=12;
+		}else{
+			this.numero=numero;
+		}
 	}
 	
 	public int getNumero(){
@@ -29,7 +42,22 @@ public class Carta {
 		return palo;
 	}
 	public void setPalo(String palo) {
-		this.palo = palo;
+		switch (palo){
+			case Carta.BASTOS:
+				this.palo=Carta.BASTOS;
+				break;
+			case Carta.OROS:
+				this.palo=Carta.OROS;
+				break;
+			case Carta.COPAS:
+				this.palo=Carta.COPAS;
+				break;
+			case Carta.ESPADAS:
+				this.palo=Carta.ESPADAS;
+				break;
+			default:
+				this.palo="BASTOS";
+		}
 	}
 
 }
