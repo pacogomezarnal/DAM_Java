@@ -18,6 +18,10 @@ public class Principal {
 		Personaje personaje=new Personaje();
 		personaje.setNivel(3);
 		personaje.setVida(100);
+		
+		//Creamos una ventana
+		Ventana1 v1 =new Ventana1();
+		v1.setVisible(true);
 
 	}
 
