@@ -5,21 +5,24 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.ImageIcon;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class Imagenes extends JFrame {
+import javax.swing.SwingConstants;
+
+public class Eventos02 extends JFrame {
 
 	private JPanel contentPane;
-	private JLabel lblEtiqueta;
 
 	/**
-	 * ESTE ES EL MAIN
+	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Imagenes frame = new Imagenes();
+					Eventos02 frame = new Eventos02();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +34,7 @@ public class Imagenes extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Imagenes() {
+	public Eventos02() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -39,16 +42,19 @@ public class Imagenes extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lblEtiqueta = new JLabel();
-		try{
-			ImageIcon imagen=new ImageIcon(getClass().getResource("MathDice/src/img/avatar2.png"));
-			lblEtiqueta.setIcon(imagen);
-		}catch(Exception e){
-			System.out.println("LA IMAGEN NO EXISTE");
-			e.printStackTrace();
-		}
+		JLabel lblNewLabel = new JLabel("PRUEBA");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel.setBounds(105, 137, 205, 58);
+		contentPane.add(lblNewLabel);
 		
-		lblEtiqueta.setBounds(10, 11, 256, 256);
-		contentPane.add(lblEtiqueta);
+		lblNewLabel.addMouseListener(
+			new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					System.out.println("Click Sobre Label");
+				}
+			}
+		);
 	}
 }
