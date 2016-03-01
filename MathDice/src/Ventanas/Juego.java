@@ -17,6 +17,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
@@ -63,7 +64,6 @@ public class Juego extends JFrame {
 	private JLabel resultadoOK;
 	//Boton repetir
 	private JButton repetir;
-	private JTextField textoExamen;
 	/**
 	 * Create the frame.
 	 */
@@ -107,14 +107,7 @@ public class Juego extends JFrame {
 
 		dado6 = new JLabel("");
 		dado6.setBounds(10, 310, 173, 173);
-		contentPane.add(dado6);
-		//EXAMEN
-		dado6.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				textoExamen.setText("Que haces tocando en ese dado");
-			}
-		});		
+		contentPane.add(dado6);	
 		
 		//Colocamos los botones de suma y resta
 		suma = new JButton("+");
@@ -199,17 +192,6 @@ public class Juego extends JFrame {
 		repetir.setBounds(510, 284, 464, 63);
 		contentPane.add(repetir);
 		
-		textoExamen = new JTextField();
-		textoExamen.setHorizontalAlignment(SwingConstants.CENTER);
-		textoExamen.setForeground(Color.BLACK);
-		textoExamen.setText("");
-		textoExamen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textoExamen.setEditable(false);
-		textoExamen.setColumns(10);
-		textoExamen.setBounds(211, 344, 289, 139);
-		contentPane.add(textoExamen);
-
-		
 		inicializarBotones();
 	}
 	
@@ -233,72 +215,22 @@ public class Juego extends JFrame {
 		//Colocamos los dados de 3 caras
 		for(int i=0;i<numerosAlmacenadosDados3.length;i++) numerosAlmacenadosDados3[i]=dado.nextInt(3); //El numero aleatorio
 		dado1.setIcon(dados3[numerosAlmacenadosDados3[0]]); //Imagen dentro de los JLabel
+		dado1.setName("1");
 		dado2.setIcon(dados3[numerosAlmacenadosDados3[1]]);
+		dado2.setName("2");
 		dado3.setIcon(dados3[numerosAlmacenadosDados3[2]]);
-		dado1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(tocaNumero){
-					resultado.setText(resultado.getText()+String.valueOf(numerosAlmacenadosDados3[0]+1));
-					dado1.removeMouseListener(this);
-					dado1.setIcon(dadoGris);
-					tocaNumero=false;
-					setOperacion(numerosAlmacenadosDados3[0]+1);
-				}
-			}
-		});
-		dado2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(tocaNumero){
-					resultado.setText(resultado.getText()+String.valueOf(numerosAlmacenadosDados3[1]+1));
-					dado2.removeMouseListener(this);
-					dado2.setIcon(dadoGris);
-					tocaNumero=false;
-					setOperacion(numerosAlmacenadosDados3[1]+1);
-				}
-			}
-		});
-		dado3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(tocaNumero){
-					resultado.setText(resultado.getText()+String.valueOf(numerosAlmacenadosDados3[2]+1));
-					dado3.removeMouseListener(this);
-					dado3.setIcon(dadoGris);
-					tocaNumero=false;
-					setOperacion(numerosAlmacenadosDados3[2]+1);
-				}
-			}
-		});
+		dado3.setName("3");
+		dado1.addMouseListener(new ListenerDados());
+		dado2.addMouseListener(new ListenerDados());
+		dado3.addMouseListener(new ListenerDados());
 		//Colocamos los dados de 6 caras
 		for(int i=0;i<numerosAlmacenadosDados6.length;i++) numerosAlmacenadosDados6[i]=dado.nextInt(6);
 		dado4.setIcon(dados6[numerosAlmacenadosDados6[0]]);
+		dado4.setName("4");
 		dado5.setIcon(dados6[numerosAlmacenadosDados6[1]]);
-		dado4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(tocaNumero){
-					resultado.setText(resultado.getText()+String.valueOf(numerosAlmacenadosDados6[0]+1));
-					dado4.removeMouseListener(this);
-					dado4.setIcon(dadoGris);
-					tocaNumero=false;
-					setOperacion(numerosAlmacenadosDados6[0]+1);
-				}
-			}
-		});
-		dado5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(tocaNumero){
-					resultado.setText(resultado.getText()+String.valueOf(numerosAlmacenadosDados6[1]+1));
-					dado5.removeMouseListener(this);
-					dado5.setIcon(dadoGris);
-					tocaNumero=false;
-					setOperacion(numerosAlmacenadosDados6[1]+1);
-				}
-			}
-		});
+		dado5.setName("5");
+		dado4.addMouseListener(new ListenerDados());
+		dado5.addMouseListener(new ListenerDados());
 		//Colocamos los dados de 12 caras
 		numerosAlmacenadosDados12=dado.nextInt(12);
 		dado6.setIcon(dados12[numerosAlmacenadosDados12]);		
@@ -314,8 +246,8 @@ public class Juego extends JFrame {
 		numerosIntroducidos=0;
 		esSuma=true;		
 		
-		textoExamen.setText("");
 	}
+	
 	private void setOperacion(int num){
 		numerosIntroducidos++;
 		if(numerosIntroducidos>1){
@@ -324,5 +256,47 @@ public class Juego extends JFrame {
 		}else{
 			operacion=num;
 		}
+	}
+	
+	//Mi implementación especifica de un ActionListener
+	//A través de un Inner class
+	private class ListenerDados implements MouseListener {
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			JLabel dado = (JLabel) e.getSource();
+			int numeroDado=Integer.valueOf(dado.getName());
+			if(tocaNumero){
+				if(numeroDado<4)
+					resultado.setText(resultado.getText()+String.valueOf(numerosAlmacenadosDados3[numeroDado-1]+1));
+				else
+					resultado.setText(resultado.getText()+String.valueOf(numerosAlmacenadosDados6[numeroDado-4]+1));
+				dado.removeMouseListener(this);
+				dado.setIcon(dadoGris);
+				tocaNumero=false;
+				if(numeroDado<4)
+					setOperacion(numerosAlmacenadosDados3[numeroDado-1]+1);
+				else
+					setOperacion(numerosAlmacenadosDados6[numeroDado-4]+1);
+			}
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+
+		}
+
 	}
 }
