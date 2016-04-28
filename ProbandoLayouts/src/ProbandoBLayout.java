@@ -6,12 +6,26 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
+/**
+* <h1>ProbandoBLayout</h1>
+* La clase ProbandoBLayout nos muestra un sencillo ejemplo de uso del Layout BorderLayout
+* <p>
+* Como se puede observar es una disposición muy similar a lo que podría representar cualquier ventana de una aplicación cualquiera, 
+* donde en el NORTE tendríamos nuestro menú, en el SUR nuestros elementos de avisos o información, 
+* y en la parte central los elementos principales y lógicos de la aplicación.
+* 
+*
+* @author  Paco Gómez
+* @version 1.0
+* @since   2016-03-31 
+* @see <a href="http://cookingsoftware.blogspot.com.es/2016/03/java-layout-managers.html">Java. Layout Managers</a>
+*/
 public class ProbandoBLayout extends JFrame {
 
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
+	 * Lanza la aplicación de forma asíncrona
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -27,7 +41,7 @@ public class ProbandoBLayout extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Creamos la ventana
 	 */
 	public ProbandoBLayout() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

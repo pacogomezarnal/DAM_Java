@@ -21,8 +21,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import javax.swing.JMenuBar;
 
-public class Juego extends JFrame {
+public class Juego extends JPanel {
 
 	//Paneles generales
 	private JPanel contentPane;
@@ -69,12 +70,13 @@ public class Juego extends JFrame {
 	 */
 	public Juego() {
 		//Panel principal
-		setTitle("JUEGO");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setTitle("JUEGO");
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 50, 1000, 530);
-		contentPane = new JPanel();
+		
+		contentPane = this;
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		//setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		//Texto del jugador

@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Juego.Jugador;
+import Modelo.confDB;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -16,7 +17,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Login extends JFrame {
+public class Registro extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -27,17 +28,22 @@ public class Login extends JFrame {
 	private JTextField textField_3;
 	
 	//Referencia a mi ventana
-	Login l;
+	Registro l;
 	
 	//Ventana de juego
-	Juego j=new Juego();
+	VentanaPrincipal j=new VentanaPrincipal();
+	private JTextField textField_4;
+	
+	//Conexion con base de datos
+
+	private confDB db=new confDB();
 
 
-	public Login() {
-		setTitle("LOGIN");
+	public Registro() {
+		setTitle("REGISTRO");
 		//Ventana
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 337, 300);
+		setBounds(100, 100, 337, 356);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -58,7 +64,7 @@ public class Login extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblApellidos = new JLabel("Apellidos");
+		JLabel lblApellidos = new JLabel("1er Apellido");
 		lblApellidos.setBounds(10, 87, 78, 14);
 		contentPane.add(lblApellidos);
 		
@@ -68,12 +74,12 @@ public class Login extends JFrame {
 		contentPane.add(textField_1);
 		
 		JLabel lblEdad = new JLabel("Edad");
-		lblEdad.setBounds(10, 131, 46, 14);
+		lblEdad.setBounds(10, 170, 46, 14);
 		contentPane.add(lblEdad);
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		textField_2.setBounds(98, 128, 101, 20);
+		textField_2.setBounds(98, 167, 101, 20);
 		contentPane.add(textField_2);
 		
 		JButton btnNewButton = new JButton("A JUGAR");
@@ -86,27 +92,44 @@ public class Login extends JFrame {
 				else if(Integer.valueOf(textField_2.getText())<0){
 					textField_3.setText("Edad incorrecta");
 				}else{
-					player.setNombre(textField.getText());
-					player.setApellidos(textField_1.getText());
-					player.setEdad(Integer.valueOf(textField_2.getText()));
-					
-					//Lanzamos la ventana de Juego y hacemos invisible la de Login/Perfil
-					j.setJugador(player);
-					j.setVisible(true);
-					l.setVisible(false);
+					//Registramos usuario en la base de datos
+					String msg=db.conectar();
+					if(msg==null){
+						//Realizamos el registro
+						player.setNombre(textField.getText());
+						player.setApellido1(textField_1.getText());
+						player.setApellido2(textField_4.getText());
+						player.setEdad(Integer.valueOf(textField_2.getText()));
+						player.insertarUsuario(db.getConexion());
+						//Lanzamos la ventana de Juego y hacemos invisible la de Login/Perfil
+						j.setJugador(player);
+						j.setVisible(true);
+						l.setVisible(false);						
+					}else{
+						textField_3.setText(msg);
+					}
 				}
 			}
 		});
-		btnNewButton.setBounds(10, 175, 289, 23);
+		btnNewButton.setBounds(10, 231, 289, 23);
 		contentPane.add(btnNewButton);
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(10, 209, 289, 42);
+		textField_3.setBounds(10, 265, 289, 42);
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
 		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(98, 126, 201, 20);
+		contentPane.add(textField_4);
+		
+		JLabel lbloApellido = new JLabel("2o Apellido");
+		lbloApellido.setBounds(10, 129, 78, 14);
+		contentPane.add(lbloApellido);
+		
 		//Referencia a mi ventana
 		l=this;
-		j=new Juego();
+		j=new VentanaPrincipal();
 	}
 }
