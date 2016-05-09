@@ -14,31 +14,31 @@ import java.sql.DriverManager;
 * @see <a href="">Java. Layout Managers</a>
 */
 public class confDB {
-	private Connection connect = null;
+	private static Connection connect = null;
+	private static confDB INSTANCE = null;
 	
-	public confDB() {
-
-	}
 	
-	//Método que conecta a la base de datos devolviendo un null si no hay errores
-	//Devuelve el error si no hay conectividad
-	public String conectar(){
+	private confDB() {
 		try {
 		      // Cargamos en ejecución 
 		      Class.forName("com.mysql.jdbc.Driver");
 		      // Setup the connection with the DB
 		      connect = DriverManager
-		          .getConnection("jdbc:mysql://10.1.97.224/mathDice?"
+		          .getConnection("jdbc:mysql://192.168.1.192/mathDice?"
 		              + "user=cook&password=cook01");
-		      //Conexion realizada
-		      return null;
+		      //Mensaje de conexion realizada
+		      System.out.println("Conexion realizada");
 	    } catch (Exception e) {
-	        return e.getMessage();
-	    } 		
+	        System.out.println(e);
+	    } 
 	}
 	
-	public Connection getConexion(){
-			return connect;
+	public static Connection getConexion(){
+        if (connect == null){
+        	INSTANCE = new confDB();
+        }
+		return connect;
 	}
+
 
 }

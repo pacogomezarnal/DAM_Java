@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.awt.event.ActionEvent;
 
 public class Registro extends JFrame {
@@ -34,9 +35,6 @@ public class Registro extends JFrame {
 	VentanaPrincipal j=new VentanaPrincipal();
 	private JTextField textField_4;
 	
-	//Conexion con base de datos
-
-	private confDB db=new confDB();
 
 
 	public Registro() {
@@ -85,6 +83,7 @@ public class Registro extends JFrame {
 		JButton btnNewButton = new JButton("A JUGAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				int id=0;
 				//Comprobaciones
 				if((textField.getText().length()==0)||(textField_1.getText().length()==0)||(textField_2.getText().length()==0)){
 					textField_3.setText("Falta algún campo por rellenar");
@@ -93,20 +92,20 @@ public class Registro extends JFrame {
 					textField_3.setText("Edad incorrecta");
 				}else{
 					//Registramos usuario en la base de datos
-					String msg=db.conectar();
-					if(msg==null){
+					Connection c=confDB.getConexion();
+					if(c==null){
 						//Realizamos el registro
 						player.setNombre(textField.getText());
 						player.setApellido1(textField_1.getText());
 						player.setApellido2(textField_4.getText());
 						player.setEdad(Integer.valueOf(textField_2.getText()));
-						player.insertarUsuario(db.getConexion());
+						player.insertarUsuario(confDB.getConexion());
 						//Lanzamos la ventana de Juego y hacemos invisible la de Login/Perfil
 						j.setJugador(player);
 						j.setVisible(true);
 						l.setVisible(false);						
 					}else{
-						textField_3.setText(msg);
+						textField_3.setText("ERROR EN LA CONEXIÓN A BBDD");
 					}
 				}
 			}

@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Juego.Jugador;
+import Juego.JugadorDB;
+import Modelo.confDB;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
@@ -43,6 +46,7 @@ public class Juego extends JPanel {
 	//Clase que almacena el Jugador
 	private Jugador player;
 	JLabel nombreJugador;
+	JLabel puntuacion;
 	
 	//JLabel de las imágenes
 	private JLabel dado1,dado2,dado3;
@@ -65,6 +69,10 @@ public class Juego extends JPanel {
 	private JLabel resultadoOK;
 	//Boton repetir
 	private JButton repetir;
+	
+	//Manejador de la base de datos
+	private confDB db;
+	private JugadorDB jdb;
 	/**
 	 * Create the frame.
 	 */
@@ -78,13 +86,7 @@ public class Juego extends JPanel {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		//setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		//Texto del jugador
-		nombreJugador = new JLabel("Bienvenido");
-		nombreJugador.setFont(new Font("Tahoma", Font.PLAIN, 36));
-		nombreJugador.setHorizontalAlignment(SwingConstants.CENTER);
-		nombreJugador.setBounds(500, 10, 474, 41);
-		contentPane.add(nombreJugador);
+		setLayout(null);
 		
 		//Dados, configuraciones gennerales
 		dado1 = new JLabel("");
@@ -136,6 +138,13 @@ public class Juego extends JPanel {
 				}
 			}
 		});
+		
+		//Texto del jugador
+		nombreJugador = new JLabel("Bienvenido");
+		nombreJugador.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		nombreJugador.setHorizontalAlignment(SwingConstants.CENTER);
+		nombreJugador.setBounds(510, 5, 464, 21);
+		contentPane.add(nombreJugador);
 		resta.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		resta.setBounds(779, 62, 195, 63);
 		contentPane.add(resta);
@@ -157,6 +166,9 @@ public class Juego extends JPanel {
 					repetir.setEnabled(true);
 					if((numerosAlmacenadosDados12+1)==operacion){
 						resultadoOK.setText("CORRECTÍSIMO");
+						player.setPuntos(player.getPuntos()+5);
+						puntuacion.setText("Tu puntuacion es: "+player.getPuntos());
+						jdb.actualizarUsuarioPuntos(confDB.getConexion());
 					}else{
 						resultadoOK.setText("INTÉNTALO DE NUEVO");
 					}
@@ -194,12 +206,21 @@ public class Juego extends JPanel {
 		repetir.setBounds(510, 284, 464, 63);
 		contentPane.add(repetir);
 		
+		puntuacion = new JLabel("Tu puntuacion es: 0");
+		puntuacion.setHorizontalAlignment(SwingConstants.CENTER);
+		puntuacion.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		puntuacion.setBounds(510, 35, 464, 21);
+		add(puntuacion);
+		
 		inicializarBotones();
 	}
 	
 	public void setJugador(Jugador player){
 		this.player=player;
 		nombreJugador.setText("Bienvenido al juego "+player.getNombre());
+		puntuacion.setText("Tu puntuacion es: "+player.getPuntos());
+		//Creamos el objeto JugaddorDB
+		jdb=new JugadorDB(player);
 	}
 	private void inicializarBotones(){
 		//Cargamos todas las imagenes en los arrays

@@ -11,6 +11,7 @@ public class Jugador {
 	private String apellido2;
 	private int edad;
 	private int puntos;
+	private int id;
 	
 	private JugadorDB jDB;
 	
@@ -62,13 +63,25 @@ public class Jugador {
 		this.apellido2 = apellido2;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Jugador() {
 		
 	}
 	
 	public void insertarUsuario(Connection c){
 		jDB = new JugadorDB(this);
-		jDB.insertarUsuario(c);
+		this.id=jDB.insertarUsuario(c);
+	}
+	
+	public String toString(){
+		return this.id+"-"+this.nombre+" "+this.apellido1;
 	}
 
 }

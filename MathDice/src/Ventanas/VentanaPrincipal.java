@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ import java.awt.CardLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.SwingConstants;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -64,6 +66,15 @@ public class VentanaPrincipal extends JFrame {
 			    cl.show(contentPane, VENTANAP);
 			}
 		});
+		
+		JMenu mnNewMenu = new JMenu("Cambiar Jugador");
+		mnNewMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//LOGIN
+			}
+		});
+		menuBar.add(Box.createHorizontalGlue());
+		menuBar.add(mnNewMenu);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

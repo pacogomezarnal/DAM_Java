@@ -1,12 +1,12 @@
 package Principal;
 
-import Ventanas.Registro;
+import Ventanas.Login;
 
 public class Principal {
 
 	public static void main(String[] args) {
 		// Generamos la ventana de Login
-		Registro login = new Registro();
+		Login login = new Login();
 		login.setVisible(true);
 
 	}
